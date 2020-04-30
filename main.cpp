@@ -225,7 +225,10 @@ void RBT::inorder_check(Node * current){ ///ok
     if(lc != NULL)
         inorder_check(lc);
 
-    cout<<current -> get_value()<<" : "<<current -> get_color()<<" | ";
+    if(current -> get_color() == 0)
+        cout<<current -> get_value()<<" : red | ";
+    else
+        cout<<current -> get_value()<<" : black | ";
 
     if(rc != NULL)
         inorder_check(rc);
