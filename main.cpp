@@ -213,13 +213,19 @@ void RBT::set_root(Node * x){ ///ok
 
 void RBT::inorder_check(Node * current){ ///ok
 
+    if(current == NULL){
+
+        cout<<'\n';
+        return;
+    }
+
     Node *lc = current -> get_lchild();
     Node *rc = current -> get_rchild();
 
     if(lc != NULL)
         inorder_check(lc);
 
-    cout<<current -> get_value()<<" ";
+    cout<<current -> get_value()<<" : "<<current -> get_color()<<" | ";
 
     if(rc != NULL)
         inorder_check(rc);
@@ -631,14 +637,13 @@ void RBT::delete_val(int val){
 
     if(x == NULL){  ///simulez un nod cu valoarea NULL, dar care EXISTA ca obiect
 
+        x = new Node(666, 1, 1); /// RANDOM VALUE, culoarea OBLIGATORIU NEGRU
+
         x_is_null = true;
 
-        x -> set_value(666); /// RANDOM VALUE
-        x -> set_freq(0); ///RANDOM VALUE
         x -> set_parent(todel);
         x -> set_lchild(NULL);
         x -> set_rchild(NULL);
-        x -> set_color(1); ///important, culoarea oricarui nod NULL este NEGRU
 
         todel -> set_lchild(x); /// se putea alege ca nodul simulat null sa fie fiul drept, nu conteaza
     }
@@ -655,6 +660,18 @@ void RBT::delete_val(int val){
 
             del_case_1(x);
         }
+    }
+
+    if(x == root && x_is_null){
+
+        root = NULL;
+    }
+    else if(x_is_null){
+
+        if(x -> get_parent() -> get_lchild() == x)
+            x -> get_parent() -> set_lchild(NULL);
+        else
+            x -> get_parent() -> set_rchild(NULL);
     }
 }
 
@@ -762,7 +779,7 @@ void RBT::insert_node(Node * toin){ ///ok
 
 int main(){
 
-    /*RBT tree(60);
+    RBT tree(60);
 
     ///cout<<tree.get_root() -> get_color()<<'\n'<<'\n'<<'\n';
 
@@ -801,7 +818,7 @@ int main(){
     cout<<'\n'<<'\n';
 
     Node * aux7 = new Node(230);
-    tree.insert_node(aux2);
+    tree.insert_node(aux7);
     tree.inorder_check(tree.get_root());
     cout<<'\n'<<'\n';
 
@@ -818,7 +835,47 @@ int main(){
     Node * aux10 = new Node(57);
     tree.insert_node(aux10);
     tree.inorder_check(tree.get_root());
-    cout<<'\n'<<'\n';*/
+    cout<<'\n'<<'\n';
+
+    tree.delete_val(230);
+    tree.inorder_check(tree.get_root());
+    cout<<'\n'<<'\n';
+
+    tree.delete_val(10);
+    tree.inorder_check(tree.get_root());
+    cout<<'\n'<<'\n';
+
+    tree.delete_val(52);
+    tree.inorder_check(tree.get_root());
+    cout<<'\n'<<'\n';
+
+    tree.delete_val(110);
+    tree.inorder_check(tree.get_root());
+    cout<<'\n'<<'\n';
+
+    tree.delete_val(50);
+    tree.inorder_check(tree.get_root());
+    cout<<'\n'<<'\n';
+
+    tree.delete_val(55);
+    tree.inorder_check(tree.get_root());
+    cout<<'\n'<<'\n';
+
+    tree.delete_val(60);
+    tree.inorder_check(tree.get_root());
+    cout<<'\n'<<'\n';
+
+    tree.delete_val(57);
+    tree.inorder_check(tree.get_root());
+    cout<<'\n'<<'\n';
+
+    tree.delete_val(20);
+    tree.inorder_check(tree.get_root());
+    cout<<'\n'<<'\n';
+
+    tree.delete_val(750);
+    tree.inorder_check(tree.get_root());
+    cout<<'\n'<<'\n';
 
     return 0;
 }
